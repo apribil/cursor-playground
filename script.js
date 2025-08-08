@@ -48,11 +48,47 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Debug function to update debug panel
+    function updateDebugInfo() {
+        const currentBg = document.getElementById('currentBg');
+        const darkModeStatus = document.getElementById('darkModeStatus');
+        const bgIndex = document.getElementById('bgIndex');
+        const bodyClasses = document.getElementById('bodyClasses');
+        
+        if (currentBg) {
+            const isDarkMode = document.documentElement.classList.contains('dark');
+            const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
+            const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
+            
+            const currentBgClass = Array.from(document.body.classList).find(cls => 
+                lightColors.includes(cls) || darkColors.includes(cls)
+            );
+            
+            currentBg.textContent = currentBgClass || 'None';
+            darkModeStatus.textContent = isDarkMode ? 'Yes' : 'No';
+            bgIndex.textContent = localStorage.getItem('backgroundIndex') || '0';
+            bodyClasses.textContent = document.body.className.substring(0, 50) + '...';
+        }
+    }
+
     // Initialize background color
     initBackgroundColor();
 
+    // Update version time
+    const updateTimeElement = document.getElementById('updateTime');
+    if (updateTimeElement) {
+        const now = new Date();
+        updateTimeElement.textContent = now.toLocaleString();
+    }
+
+    // Update debug info on page load
+    setTimeout(updateDebugInfo, 100);
+
     // Add event listener for dark mode toggle
-    darkModeToggle.addEventListener('click', toggleDarkMode);
+    darkModeToggle.addEventListener('click', function() {
+        toggleDarkMode();
+        setTimeout(updateDebugInfo, 100);
+    });
 
     // Button 1: Show alert message
     btn1.addEventListener('click', function() {
@@ -62,41 +98,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Background Toggle: Change page background color
     btn2.addEventListener('click', function() {
-        const isDarkMode = document.documentElement.classList.contains('dark');
+        console.log('Background Toggle clicked!');
         
-        // Store current background state in localStorage
+        // Get current background index from localStorage
         let currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
         
-        if (isDarkMode) {
-            // Dark mode color variants
-            const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
-            
-            // Get next color (cycle through)
-            currentBgIndex = (currentBgIndex + 1) % darkColors.length;
-            const nextColor = darkColors[currentBgIndex];
-            
-            // Remove all existing dark background classes and add the new one
-            darkColors.forEach(color => document.body.classList.remove(color));
-            document.body.classList.add(nextColor);
-            
-            console.log('Dark background color changed to:', nextColor, 'index:', currentBgIndex);
-        } else {
-            // Light mode color variants
-            const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
-            
-            // Get next color (cycle through)
-            currentBgIndex = (currentBgIndex + 1) % lightColors.length;
-            const nextColor = lightColors[currentBgIndex];
-            
-            // Remove all existing light background classes and add the new one
-            lightColors.forEach(color => document.body.classList.remove(color));
-            document.body.classList.add(nextColor);
-            
-            console.log('Light background color changed to:', nextColor, 'index:', currentBgIndex);
-        }
+        // Define color arrays
+        const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
+        const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
         
-        // Save current index to localStorage
+        // Increment index
+        currentBgIndex = (currentBgIndex + 1) % lightColors.length;
+        
+        // Remove ALL possible background classes
+        const allColors = [...lightColors, ...darkColors];
+        allColors.forEach(color => {
+            if (document.body.classList.contains(color)) {
+                document.body.classList.remove(color);
+                console.log('Removed:', color);
+            }
+        });
+        
+        // Add the new background class
+        const isDarkMode = document.documentElement.classList.contains('dark');
+        const newColor = isDarkMode ? darkColors[currentBgIndex] : lightColors[currentBgIndex];
+        document.body.classList.add(newColor);
+        
+        // Save to localStorage
         localStorage.setItem('backgroundIndex', currentBgIndex.toString());
+        
+        // Update debug info
+        updateDebugInfo();
+        
+        console.log('Background changed to:', newColor, 'Index:', currentBgIndex, 'Dark mode:', isDarkMode);
     });
 
     // Button 3: Toggle modal visibility

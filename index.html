@@ -8,6 +8,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="antialiased bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center relative">
+    <!-- Version indicator -->
+    <div class="absolute top-4 left-4">
+      <div class="bg-blue-500 text-white px-2 py-1 rounded text-xs font-mono">
+        v1.2.3 - Updated: <span id="updateTime">2025-08-07 22:55</span>
+      </div>
+    </div>
+    
     <!-- Dark mode toggle -->
     <div class="absolute top-4 right-4 flex items-center space-x-2">
       <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</label>
@@ -30,6 +37,15 @@
         <button id="btn3" type="button" class="w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">Button 3</button>
       </div>
     </main>
+
+    <!-- Debug panel -->
+    <div class="absolute bottom-4 left-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 text-xs font-mono max-w-xs">
+      <div class="font-semibold mb-2">Debug Info:</div>
+      <div>Current BG: <span id="currentBg">Loading...</span></div>
+      <div>Dark Mode: <span id="darkModeStatus">Loading...</span></div>
+      <div>BG Index: <span id="bgIndex">Loading...</span></div>
+      <div>Body Classes: <span id="bodyClasses">Loading...</span></div>
+    </div>
 
     <!-- Modal (hidden by default) -->
     <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
