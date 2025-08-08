@@ -21,12 +21,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function toggleDarkMode() {
+        console.log('Dark mode toggle clicked!');
+        
         const isDarkMode = document.documentElement.classList.toggle('dark');
         
         // Save preference to localStorage
         localStorage.setItem('darkMode', isDarkMode);
         
+        // Update background color to match the new theme
+        const currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
+        const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
+        const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
+        
+        // Remove all background classes
+        const allColors = [...lightColors, ...darkColors];
+        allColors.forEach(color => {
+            if (document.body.classList.contains(color)) {
+                document.body.classList.remove(color);
+            }
+        });
+        
+        // Add the appropriate background class for the new theme
+        const newColor = isDarkMode ? darkColors[currentBgIndex] : lightColors[currentBgIndex];
+        document.body.classList.add(newColor);
+        
         console.log('Dark mode:', isDarkMode ? 'enabled' : 'disabled');
+        console.log('Background updated to:', newColor);
     }
 
     // Initialize dark mode on page load
@@ -83,9 +103,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update debug info on page load
     setTimeout(updateDebugInfo, 100);
+    
+    // Test if dark mode toggle button exists
+    if (darkModeToggle) {
+        console.log('Dark mode toggle button found and ready!');
+    } else {
+        console.error('Dark mode toggle button not found!');
+    }
 
     // Add event listener for dark mode toggle
     darkModeToggle.addEventListener('click', function() {
+        console.log('Dark mode toggle button clicked!');
         toggleDarkMode();
         setTimeout(updateDebugInfo, 100);
     });
