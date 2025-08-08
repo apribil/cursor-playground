@@ -6,37 +6,108 @@
     <title>Customer Experience Journey - Strategic Mapping</title>
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   </head>
   <body class="antialiased bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen">
-    <!-- Header -->
-    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/50 sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-6 py-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-3">
-            <a href="index.html" class="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/>
-              </svg>
-            </a>
-            <div>
-              <h1 class="text-xl font-bold text-slate-900">Customer Experience Journey</h1>
-              <p class="text-sm text-slate-500">Strategic customer mapping & optimization</p>
+    <!-- Fixed Top Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-50">
+      <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <!-- Logo/Brand -->
+            <div class="flex items-center space-x-3">
+              <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-lg font-semibold text-slate-900">Product Management Showcase</h2>
+                <p class="text-xs text-slate-500">Strategic Product Leadership Platform</p>
+              </div>
+            </div>
+            
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8">
+              <a href="index.html" class="text-slate-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-2">
+                <i class="fas fa-home text-sm"></i>
+                <span>Home</span>
+              </a>
+              <a href="analytics-dashboard.html" class="text-slate-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-2">
+                <i class="fas fa-chart-line text-sm"></i>
+                <span>Analytics Dashboard</span>
+              </a>
+              <a href="customer-journey.html" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-2">
+                <i class="fas fa-users text-sm"></i>
+                <span>Customer Journey</span>
+              </a>
+              <a href="strategic.html" class="text-slate-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-2">
+                <i class="fas fa-rocket text-sm"></i>
+                <span>Strategic Version</span>
+              </a>
+              <a href="classic.html" class="text-slate-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center space-x-2">
+                <i class="fas fa-gamepad text-sm"></i>
+                <span>Classic Version</span>
+              </a>
+            </div>
+
+            <!-- Version Badge and Mobile Menu Button -->
+            <div class="flex items-center space-x-4">
+              <!-- Journey Optimized Badge -->
+              <div class="bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full text-xs font-medium">
+                Journey Optimized
+              </div>
+              
+              <!-- Mobile menu button -->
+              <button id="mobile-menu-button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-slate-700 hover:text-blue-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200">
+                <i class="fas fa-bars text-lg"></i>
+              </button>
             </div>
           </div>
-          <div class="flex items-center space-x-4">
-            <div class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
-              Journey Optimized
-            </div>
-            <div class="text-sm text-slate-500">
-              Satisfaction: <span class="font-semibold text-green-600">4.8/5.0</span>
+          
+          <!-- Mobile Navigation Menu -->
+          <div id="mobile-menu" class="hidden md:hidden pb-4">
+            <div class="space-y-1">
+              <a href="index.html" class="text-slate-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 flex items-center space-x-3">
+                <i class="fas fa-home text-sm w-5"></i>
+                <span>Home</span>
+              </a>
+              <a href="analytics-dashboard.html" class="text-slate-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 flex items-center space-x-3">
+                <i class="fas fa-chart-line text-sm w-5"></i>
+                <span>Analytics Dashboard</span>
+              </a>
+              <a href="customer-journey.html" class="text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 flex items-center space-x-3">
+                <i class="fas fa-users text-sm w-5"></i>
+                <span>Customer Journey</span>
+              </a>
+              <a href="strategic.html" class="text-slate-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 flex items-center space-x-3">
+                <i class="fas fa-rocket text-sm w-5"></i>
+                <span>Strategic Version</span>
+              </a>
+              <a href="classic.html" class="text-slate-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 flex items-center space-x-3">
+                <i class="fas fa-gamepad text-sm w-5"></i>
+                <span>Classic Version</span>
+              </a>
             </div>
           </div>
         </div>
-      </div>
+      </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-6 py-8">
+    <main class="max-w-7xl mx-auto px-6 py-8 pt-24">
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900 mb-2">Customer Experience Journey</h1>
+        <p class="text-slate-600">Strategic customer mapping & optimization</p>
+        <div class="flex items-center space-x-4 mt-4">
+          <div class="text-sm text-slate-500">
+            Satisfaction: <span class="font-semibold text-green-600">4.8/5.0</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Customer Personas -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-200/50">
@@ -330,5 +401,16 @@
     </main>
 
     <script src="customer-journey.js"></script>
+    <script>
+      // Mobile menu toggle functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+        });
+      });
+    </script>
   </body>
 </html>
