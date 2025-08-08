@@ -20,16 +20,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function toggleDarkMode() {
-        console.log('Dark mode toggle clicked!');
-        
-        const isDarkMode = document.documentElement.classList.toggle('dark');
-        
-        // Save preference to localStorage
-        localStorage.setItem('darkMode', isDarkMode);
-        
-        // Update background color to match the new theme
-        const currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
+    // Unified background management function
+    function setBackgroundColor(index, isDarkMode) {
         const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
         const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
         
@@ -41,12 +33,30 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Add the appropriate background class for the new theme
-        const newColor = isDarkMode ? darkColors[currentBgIndex] : lightColors[currentBgIndex];
+        // Add the appropriate background class
+        const newColor = isDarkMode ? darkColors[index] : lightColors[index];
         document.body.classList.add(newColor);
         
+        // Save to localStorage
+        localStorage.setItem('backgroundIndex', index.toString());
+        
+        console.log('Background set to:', newColor, 'Index:', index, 'Dark mode:', isDarkMode);
+        return newColor;
+    }
+
+    function toggleDarkMode() {
+        console.log('Dark mode toggle clicked!');
+        
+        const isDarkMode = document.documentElement.classList.toggle('dark');
+        
+        // Save preference to localStorage
+        localStorage.setItem('darkMode', isDarkMode);
+        
+        // Update background color to match the new theme using unified function
+        const currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
+        setBackgroundColor(currentBgIndex, isDarkMode);
+        
         console.log('Dark mode:', isDarkMode ? 'enabled' : 'disabled');
-        console.log('Background updated to:', newColor);
     }
 
     // Initialize dark mode on page load
@@ -57,15 +67,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const isDarkMode = document.documentElement.classList.contains('dark');
         const currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
         
-        if (isDarkMode) {
-            const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
-            darkColors.forEach(color => document.body.classList.remove(color));
-            document.body.classList.add(darkColors[currentBgIndex]);
-        } else {
-            const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
-            lightColors.forEach(color => document.body.classList.remove(color));
-            document.body.classList.add(lightColors[currentBgIndex]);
-        }
+        // Use unified function to set initial background
+        setBackgroundColor(currentBgIndex, isDarkMode);
     }
 
     // Debug function to update debug panel
@@ -131,34 +134,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get current background index from localStorage
         let currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
         
-        // Define color arrays
-        const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
-        const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
-        
         // Increment index
-        currentBgIndex = (currentBgIndex + 1) % lightColors.length;
+        currentBgIndex = (currentBgIndex + 1) % 8; // 8 colors total
         
-        // Remove ALL possible background classes
-        const allColors = [...lightColors, ...darkColors];
-        allColors.forEach(color => {
-            if (document.body.classList.contains(color)) {
-                document.body.classList.remove(color);
-                console.log('Removed:', color);
-            }
-        });
-        
-        // Add the new background class
+        // Use unified function to set background
         const isDarkMode = document.documentElement.classList.contains('dark');
-        const newColor = isDarkMode ? darkColors[currentBgIndex] : lightColors[currentBgIndex];
-        document.body.classList.add(newColor);
-        
-        // Save to localStorage
-        localStorage.setItem('backgroundIndex', currentBgIndex.toString());
+        setBackgroundColor(currentBgIndex, isDarkMode);
         
         // Update debug info
         updateDebugInfo();
-        
-        console.log('Background changed to:', newColor, 'Index:', currentBgIndex, 'Dark mode:', isDarkMode);
     });
 
     // Button 3: Toggle modal visibility
