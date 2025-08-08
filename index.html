@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Welcome to Cursor</title>
+    <!-- Tailwind CSS via CDN: enables utility-first styling without custom CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="antialiased text-slate-800">
+    <!-- Main content container: centers content and adds spacing -->
+    <main class="max-w-3xl mx-auto p-10 space-y-6">
+      <!-- Page headline -->
+      <h1 class="text-3xl font-bold">Welcome to Cursor</h1>
+      <!-- Button row -->
+      <div class="flex gap-3">
+        <!-- Button 1: shows a 'Hello' popup when clicked -->
+        <button id="hello-btn" type="button" class="px-4 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50 shadow-sm">Button 1</button>
+        <!-- Placeholder buttons -->
+        <button type="button" class="px-4 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50 shadow-sm">Button 2</button>
+        <button type="button" class="px-4 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50 shadow-sm">Button 3</button>
+      </div>
+    </main>
+
+    <!-- Script to wire up the 'Hello' popup on Button 1 -->
+    <script>
+      // Wait until the DOM is fully parsed and ready
+      document.addEventListener('DOMContentLoaded', function () {
+        // Get a reference to the first button by its id
+        var helloButton = document.getElementById('hello-btn');
+        if (helloButton) {
+          // When the button is clicked, show a simple alert
+          helloButton.addEventListener('click', function () {
+            alert('Hello');
+          });
+        }
+      });
+    </script>
+  </body>
+  </html>
+
+
