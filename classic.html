@@ -8,6 +8,38 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      /* Enhanced modal animations */
+      .modal-backdrop {
+        opacity: 0;
+        transition: opacity 0.2s ease-out;
+      }
+      
+      .modal-backdrop.show {
+        opacity: 1;
+      }
+      
+      .modal-content {
+        transform: scale(0.95) translateY(10px);
+        opacity: 0;
+        transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+      }
+      
+      .modal-content.show {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+      
+      /* Focus trap styles */
+      .modal-backdrop:focus {
+        outline: none;
+      }
+      
+      /* Ensure modal content is focusable */
+      .modal-content:focus {
+        outline: none;
+      }
+    </style>
   </head>
   <body class="antialiased bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen relative">
     <!-- Fixed Top Navigation Bar -->
@@ -56,7 +88,7 @@
             <div class="flex items-center space-x-4">
               <!-- Version Badge -->
               <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
-                v1.5.2
+                v1.6.0
               </div>
               
               <!-- Mobile menu button -->
@@ -267,8 +299,20 @@
     </div>
 
     <!-- Modal (hidden by default) -->
-    <div id="modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
-      <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0 border border-slate-200/20" id="modalContent">
+    <div 
+      id="modal" 
+      class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4 modal-backdrop" 
+      role="dialog" 
+      aria-modal="true" 
+      aria-labelledby="modal-title" 
+      aria-describedby="modal-description"
+      tabindex="-1"
+    >
+      <div 
+        class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-250 scale-95 opacity-0 border border-slate-200/20 modal-content" 
+        id="modalContent"
+        role="document"
+      >
         <div class="p-8">
           <div class="flex justify-between items-center mb-6">
             <div class="flex items-center space-x-3">
@@ -278,15 +322,24 @@
                 </svg>
               </div>
               <div>
-                <h2 class="text-2xl font-bold text-slate-900">Modal Demo</h2>
+                <h2 id="modal-title" class="text-2xl font-bold text-slate-900">Modal Demo</h2>
                 <p class="text-sm text-slate-600">Interactive Component</p>
               </div>
             </div>
-            <button id="closeModal" class="text-slate-400 hover:text-slate-600 text-2xl font-light transition-colors duration-200 w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100">&times;</button>
+            <button 
+              id="closeModal" 
+              class="text-slate-400 hover:text-slate-600 text-2xl font-light transition-colors duration-200 w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2" 
+              aria-label="Close modal"
+              type="button"
+            >&times;</button>
           </div>
-          <p class="text-slate-600 mb-8 text-lg leading-relaxed">This is a professional modal window demonstrating smooth animations and elegant design patterns.</p>
+          <p id="modal-description" class="text-slate-600 mb-8 text-lg leading-relaxed">This is a professional modal window demonstrating smooth animations and elegant design patterns.</p>
           <div class="flex justify-end">
-            <button id="closeModalBtn" class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+            <button 
+              id="closeModalBtn" 
+              class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+              type="button"
+            >
               Close Modal
             </button>
           </div>

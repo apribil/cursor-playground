@@ -239,68 +239,147 @@ document.addEventListener('DOMContentLoaded', function() {
         document.removeEventListener('keydown', handleGameKeys);
     });
 
-    // Button 3: Toggle modal visibility
+    // Enhanced Modal Management
+    let modalFocusableElements = [];
+    let lastFocusedElement = null;
+
+    // Button 3: Toggle modal visibility with enhanced animations
     btn3.addEventListener('click', function() {
-        const modalContent = document.getElementById('modalContent');
         if (modal.classList.contains('hidden')) {
-            // Show modal
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modalContent.classList.remove('scale-95', 'opacity-0');
-                modalContent.classList.add('scale-100', 'opacity-100');
-            }, 10);
+            openModal();
         } else {
-            // Hide modal
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
+            closeModal();
         }
         console.log('Modal visibility toggled');
     });
 
-    // Close modal when X button is clicked
-    closeModal.addEventListener('click', function() {
+    // Enhanced modal open function
+    function openModal() {
+        // Store the currently focused element
+        lastFocusedElement = document.activeElement;
+        
+        // Show modal backdrop
+        modal.classList.remove('hidden');
+        
+        // Trigger backdrop animation
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+        
+        // Trigger content animation
+        setTimeout(() => {
+            const modalContent = document.getElementById('modalContent');
+            modalContent.classList.add('show');
+        }, 50);
+        
+        // Set up focus trap
+        setupFocusTrap();
+        
+        // Focus the modal
+        modal.focus();
+    }
+
+    // Enhanced modal close function
+    function closeModal() {
         const modalContent = document.getElementById('modalContent');
-        modalContent.classList.remove('scale-100', 'opacity-100');
-        modalContent.classList.add('scale-95', 'opacity-0');
+        
+        // Trigger content animation (reverse)
+        modalContent.classList.remove('show');
+        
+        // Trigger backdrop animation (reverse)
+        setTimeout(() => {
+            modal.classList.remove('show');
+        }, 50);
+        
+        // Hide modal after animations complete
         setTimeout(() => {
             modal.classList.add('hidden');
-        }, 300);
+            
+            // Restore focus to the last focused element
+            if (lastFocusedElement) {
+                lastFocusedElement.focus();
+            }
+            
+            // Clean up focus trap
+            cleanupFocusTrap();
+        }, 250);
+    }
+
+    // Focus trap setup
+    function setupFocusTrap() {
+        // Get all focusable elements within the modal
+        modalFocusableElements = modal.querySelectorAll(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        
+        const firstElement = modalFocusableElements[0];
+        const lastElement = modalFocusableElements[modalFocusableElements.length - 1];
+        
+        // Focus the first element
+        if (firstElement) {
+            firstElement.focus();
+        }
+        
+        // Add keyboard event listener for focus trap
+        modal.addEventListener('keydown', handleModalKeydown);
+    }
+
+    // Focus trap cleanup
+    function cleanupFocusTrap() {
+        modal.removeEventListener('keydown', handleModalKeydown);
+        modalFocusableElements = [];
+    }
+
+    // Handle keyboard navigation within modal
+    function handleModalKeydown(e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            
+            const firstElement = modalFocusableElements[0];
+            const lastElement = modalFocusableElements[modalFocusableElements.length - 1];
+            
+            if (e.shiftKey) {
+                // Shift + Tab: move backwards
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                } else {
+                    const currentIndex = Array.from(modalFocusableElements).indexOf(document.activeElement);
+                    const previousElement = modalFocusableElements[currentIndex - 1];
+                    if (previousElement) {
+                        previousElement.focus();
+                    }
+                }
+            } else {
+                // Tab: move forwards
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                } else {
+                    const currentIndex = Array.from(modalFocusableElements).indexOf(document.activeElement);
+                    const nextElement = modalFocusableElements[currentIndex + 1];
+                    if (nextElement) {
+                        nextElement.focus();
+                    }
+                }
+            }
+        } else if (e.key === 'Escape') {
+            closeModal();
+        }
+    }
+
+    // Close modal when X button is clicked
+    closeModal.addEventListener('click', function() {
+        closeModal();
     });
 
     // Close modal when Close button is clicked
     closeModalBtn.addEventListener('click', function() {
-        const modalContent = document.getElementById('modalContent');
-        modalContent.classList.remove('scale-100', 'opacity-100');
-        modalContent.classList.add('scale-95', 'opacity-0');
-        setTimeout(() => {
-            modal.classList.add('hidden');
-        }, 300);
+        closeModal();
     });
 
     // Close modal when clicking outside the modal content
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
-            const modalContent = document.getElementById('modalContent');
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-            const modalContent = document.getElementById('modalContent');
-            modalContent.classList.remove('scale-100', 'opacity-100');
-            modalContent.classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
+            closeModal();
         }
     });
 });
