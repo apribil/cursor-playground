@@ -29,11 +29,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save preference to localStorage
         localStorage.setItem('darkMode', isDarkMode);
         
+        // Update the toggle button visual state
+        const toggleSpan = darkModeToggle.querySelector('span');
+        if (toggleSpan) {
+            if (isDarkMode) {
+                toggleSpan.classList.remove('translate-x-1');
+                toggleSpan.classList.add('translate-x-6');
+            } else {
+                toggleSpan.classList.remove('translate-x-6');
+                toggleSpan.classList.add('translate-x-1');
+            }
+        }
+        
         console.log('Dark mode:', isDarkMode ? 'enabled (night)' : 'disabled (day)');
     }
-
-    // Initialize dark mode on page load
-    initDarkMode();
 
     // Initialize dark mode on page load
     function initDarkMode() {
@@ -44,6 +53,22 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isDarkMode) {
             document.documentElement.classList.add('dark');
         }
+        
+        // Update the toggle button visual state on initialization
+        if (darkModeToggle) {
+            const toggleSpan = darkModeToggle.querySelector('span');
+            if (toggleSpan) {
+                if (isDarkMode) {
+                    toggleSpan.classList.remove('translate-x-1');
+                    toggleSpan.classList.add('translate-x-6');
+                } else {
+                    toggleSpan.classList.remove('translate-x-6');
+                    toggleSpan.classList.add('translate-x-1');
+                }
+            }
+        }
+        
+        console.log('Dark mode initialized:', isDarkMode ? 'enabled' : 'disabled');
     }
 
     // Debug function to update debug panel
@@ -84,11 +109,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Add event listener for dark mode toggle
-    darkModeToggle.addEventListener('click', function() {
-        console.log('Dark mode toggle button clicked!');
-        toggleDarkMode();
-        setTimeout(updateDebugInfo, 100);
-    });
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', function() {
+            console.log('Dark mode toggle button clicked!');
+            toggleDarkMode();
+            setTimeout(updateDebugInfo, 100);
+        });
+        console.log('Dark mode toggle event listener added successfully');
+    } else {
+        console.error('Dark mode toggle button not found - cannot add event listener');
+    }
 
     // Button 1: Show alert message
     btn1.addEventListener('click', function() {
