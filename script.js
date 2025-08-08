@@ -43,27 +43,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Background Toggle: Change page background color
     btn2.addEventListener('click', function() {
-        const colors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
+        const isDarkMode = document.documentElement.classList.contains('dark');
         
-        // Get current background class
-        const currentBg = Array.from(document.body.classList).find(cls => cls.startsWith('bg-') && cls.endsWith('-100'));
-        
-        // Find current color index
-        const currentIndex = colors.indexOf(currentBg);
-        
-        // Get next color (cycle through)
-        const nextIndex = (currentIndex + 1) % colors.length;
-        const nextColor = colors[nextIndex];
-        
-        // Remove current background color class
-        if (currentBg) {
-            document.body.classList.remove(currentBg);
+        if (isDarkMode) {
+            // Dark mode color variants
+            const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
+            
+            // Get current dark background class
+            const currentBg = Array.from(document.body.classList).find(cls => cls.startsWith('dark:bg-') && cls.endsWith('-900'));
+            
+            // Find current color index
+            const currentIndex = darkColors.indexOf(currentBg);
+            
+            // Get next color (cycle through)
+            const nextIndex = (currentIndex + 1) % darkColors.length;
+            const nextColor = darkColors[nextIndex];
+            
+            // Remove current dark background color class
+            if (currentBg) {
+                document.body.classList.remove(currentBg);
+            }
+            
+            // Add next dark background color
+            document.body.classList.add(nextColor);
+            
+            console.log('Dark background color changed from', currentBg || 'default', 'to:', nextColor);
+        } else {
+            // Light mode color variants
+            const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
+            
+            // Get current light background class
+            const currentBg = Array.from(document.body.classList).find(cls => cls.startsWith('bg-') && cls.endsWith('-100'));
+            
+            // Find current color index
+            const currentIndex = lightColors.indexOf(currentBg);
+            
+            // Get next color (cycle through)
+            const nextIndex = (currentIndex + 1) % lightColors.length;
+            const nextColor = lightColors[nextIndex];
+            
+            // Remove current light background color class
+            if (currentBg) {
+                document.body.classList.remove(currentBg);
+            }
+            
+            // Add next light background color
+            document.body.classList.add(nextColor);
+            
+            console.log('Light background color changed from', currentBg || 'default', 'to:', nextColor);
         }
-        
-        // Add next background color
-        document.body.classList.add(nextColor);
-        
-        console.log('Background color changed from', currentBg || 'default', 'to:', nextColor);
     });
 
     // Button 3: Toggle modal visibility
