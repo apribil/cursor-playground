@@ -1,17 +1,18 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing application...');
+    console.log('Script.js is running!');
     
     // Get references to the buttons and modal
     const btn1 = document.getElementById('btn1');
     const btn2 = document.getElementById('btn2');
     const btn3 = document.getElementById('btn3');
     const modal = document.getElementById('modal');
-    const closeModal = document.getElementById('closeModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
+    const closeModalBtn = document.getElementById('closeModal');
+    const closeModalBtn2 = document.getElementById('closeModalBtn');
 
     // Debug: Check if buttons are found
-    console.log('Button references:', { btn1, btn2, btn3, modal, closeModal, closeModalBtn });
+    console.log('Button references:', { btn1, btn2, btn3, modal, closeModalBtn, closeModalBtn2 });
     
     if (!btn1) console.error('Button 1 not found!');
     if (!btn2) console.error('Button 2 not found!');
@@ -39,10 +40,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Button 1: Show alert message
     if (btn1) {
+        console.log('Button 1 found, adding event listener...');
         btn1.addEventListener('click', function() {
             alert('Hello from Cursor!');
             console.log('Button 1 was clicked! This is a logged message.');
         });
+        console.log('Button 1 event listener added successfully');
+    } else {
+        console.error('Button 1 not found in DOM');
     }
 
 
@@ -219,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Pac-Man Game Button
     if (btn2) {
+        console.log('Button 2 found, adding event listener...');
         btn2.addEventListener('click', function() {
             console.log('Pac-Man Game clicked!');
             const gameContainer = document.getElementById('gameContainer');
@@ -235,6 +241,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Game container not found. Please refresh the page.');
             }
         });
+        console.log('Button 2 event listener added successfully');
+    } else {
+        console.error('Button 2 not found in DOM');
     }
 
     // Close game button
@@ -257,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Button 3: Toggle modal visibility with enhanced animations
     if (btn3) {
+        console.log('Button 3 found, adding event listener...');
         btn3.addEventListener('click', function() {
             if (modal && modal.classList.contains('hidden')) {
                 openModal();
@@ -265,6 +275,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             console.log('Modal visibility toggled');
         });
+        console.log('Button 3 event listener added successfully');
+    } else {
+        console.error('Button 3 not found in DOM');
     }
 
     // Enhanced modal open function
@@ -381,15 +394,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Close modal when X button is clicked
-    if (closeModal) {
-        closeModal.addEventListener('click', function() {
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', function() {
             closeModal();
         });
     }
 
     // Close modal when Close button is clicked
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', function() {
+    if (closeModalBtn2) {
+        closeModalBtn2.addEventListener('click', function() {
             closeModal();
         });
     }
@@ -402,5 +415,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Global test function
+    window.testButtons = function() {
+        console.log('Testing buttons...');
+        console.log('Button 1:', document.getElementById('btn1'));
+        console.log('Button 2:', document.getElementById('btn2'));
+        console.log('Button 3:', document.getElementById('btn3'));
+        console.log('Modal:', document.getElementById('modal'));
+        
+        // Test if buttons are clickable
+        const btn1 = document.getElementById('btn1');
+        if (btn1) {
+            console.log('Button 1 exists, testing click...');
+            btn1.click();
+        }
+    };
+
+    console.log('Script initialization complete!');
 });
   
