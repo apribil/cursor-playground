@@ -2,6 +2,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Product Management Showcase loaded successfully!');
     
+    // Initialize scroll reveal animations
+    initScrollReveal();
+    
     // Add smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -45,31 +48,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add intersection observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Observe all cards and sections
-    document.querySelectorAll('.group, .bg-white\\/50').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-
     // Add console logging for analytics tracking
     console.log('Analytics tracking initialized');
     console.log('User engagement metrics ready');
     console.log('Product management showcase active');
 });
+
+// Scroll reveal animation functionality
+function initScrollReveal() {
+    // IntersectionObserver options with small rootMargin for snappy feel
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -20px 0px' // Small margin for early triggering
+    };
+
+    // Create intersection observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const stagger = parseInt(element.getAttribute('data-stagger')) || 0;
+                
+                // Add stagger delay
+                setTimeout(() => {
+                    element.classList.add('revealed');
+                }, stagger);
+                
+                // Stop observing after animation
+                observer.unobserve(element);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all elements with scroll-reveal class
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
+
+    console.log(`Initialized scroll reveal for ${revealElements.length} elements`);
+}

@@ -10,6 +10,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+      /* Initial state for scroll reveal animations */
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(1rem);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      }
+      
+      .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
   </head>
   <body class="antialiased bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen relative">
     <!-- Fixed Top Navigation Bar -->
@@ -58,7 +71,7 @@
             <div class="flex items-center space-x-4">
               <!-- Version Badge -->
               <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
-                v2.1.0
+                v2.2.0
               </div>
               
               <!-- Mobile menu button -->
@@ -101,7 +114,7 @@
     <main class="relative z-0 pt-20 pb-8">
       <div class="max-w-6xl mx-auto px-6">
         <!-- Hero Section -->
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 scroll-reveal" data-stagger="0">
           <div class="mb-8">
             <h1 class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-slate-900 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
               Product Management Excellence
@@ -129,7 +142,7 @@
         <!-- Main Showcase Cards -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           <!-- Product Analytics Dashboard -->
-          <div class="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+          <div class="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 scroll-reveal" data-stagger="0">
             <div class="text-center mb-6">
               <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,7 +175,7 @@
           </div>
 
           <!-- Customer Experience Journey -->
-          <div class="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+          <div class="group bg-white/70 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 scroll-reveal" data-stagger="100">
             <div class="text-center mb-6">
               <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,7 +209,7 @@
         </div>
 
         <!-- Version Comparison Section -->
-        <div class="bg-white/50 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/30 shadow-lg mb-12">
+        <div class="bg-white/50 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/30 shadow-lg mb-12 scroll-reveal" data-stagger="0">
           <div class="text-center mb-8">
             <h3 class="text-3xl font-bold text-slate-900 mb-4">Development Progression</h3>
             <p class="text-slate-600 max-w-2xl mx-auto">
@@ -206,7 +219,7 @@
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Classic Version -->
-            <div class="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 scroll-reveal" data-stagger="0">
               <div class="text-center">
                 <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -227,7 +240,7 @@
             </div>
 
             <!-- Strategic Version -->
-            <div class="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="group bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-slate-200/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 scroll-reveal" data-stagger="100">
               <div class="text-center">
                 <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                   <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -250,29 +263,29 @@
         </div>
 
         <!-- Key Metrics Section -->
-        <div class="bg-white/50 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/30 shadow-lg">
+        <div class="bg-white/50 backdrop-blur-sm rounded-3xl p-8 border border-slate-200/30 shadow-lg scroll-reveal" data-stagger="0">
           <div class="text-center mb-8">
             <h3 class="text-3xl font-bold text-slate-900 mb-4">Strategic Impact Metrics</h3>
             <p class="text-slate-600">Demonstrating measurable business value through product leadership.</p>
           </div>
           
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50">
+            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50 scroll-reveal" data-stagger="0">
               <div class="text-3xl font-bold text-green-600 mb-2">+45%</div>
               <div class="text-sm font-medium text-slate-900">User Engagement</div>
               <div class="text-xs text-slate-500 mt-1">vs. Previous Quarter</div>
             </div>
-            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50">
+            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50 scroll-reveal" data-stagger="100">
               <div class="text-3xl font-bold text-blue-600 mb-2">+28%</div>
               <div class="text-sm font-medium text-slate-900">Conversion Rate</div>
               <div class="text-xs text-slate-500 mt-1">A/B Testing Results</div>
             </div>
-            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50">
+            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50 scroll-reveal" data-stagger="200">
               <div class="text-3xl font-bold text-purple-600 mb-2">$3.2M</div>
               <div class="text-sm font-medium text-slate-900">Revenue Impact</div>
               <div class="text-xs text-slate-500 mt-1">Annual Projection</div>
             </div>
-            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50">
+            <div class="text-center p-6 bg-white/70 rounded-2xl border border-slate-200/50 scroll-reveal" data-stagger="300">
               <div class="text-3xl font-bold text-orange-600 mb-2">92%</div>
               <div class="text-sm font-medium text-slate-900">Customer Satisfaction</div>
               <div class="text-xs text-slate-500 mt-1">NPS Score</div>
