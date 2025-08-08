@@ -7,27 +7,52 @@
     <!-- Tailwind CSS via CDN: enables utility-first styling without custom CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="antialiased text-slate-800">
+  <body class="antialiased bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center relative">
+    <!-- Dark mode toggle -->
+    <div class="absolute top-4 right-4 flex items-center space-x-2">
+      <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</label>
+      <button id="darkModeToggle" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-200">
+        <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 translate-x-1 dark:translate-x-6"></span>
+      </button>
+    </div>
+    
     <!-- Main content container: centers content and adds spacing -->
-    <main class="max-w-3xl mx-auto p-10 space-y-6">
+    <main class="max-w-4xl mx-auto p-8 text-center">
       <!-- Page headline -->
-      <h1 class="text-3xl font-bold">Welcome to Cursor</h1>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 dark:text-gray-100 mb-8">Welcome to Cursor</h1>
       <!-- Button row -->
-      <div class="flex gap-3">
-        <!-- Button 1: shows a 'Hello' popup when clicked -->
-        <button id="hello-btn" type="button" class="px-4 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50 shadow-sm">Button 1</button>
-        <!-- Placeholder buttons -->
-        <button type="button" class="px-4 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50 shadow-sm">Button 2</button>
-        <button type="button" class="px-4 py-2 rounded-md border border-slate-300 bg-white hover:bg-slate-50 shadow-sm">Button 3</button>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <!-- Button 1: Blue -->
+        <button id="btn1" type="button" class="w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">Button 1</button>
+        <!-- Button 2: Green -->
+        <button id="btn2" type="button" class="w-full sm:w-auto px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">Button 2</button>
+        <!-- Button 3: Purple -->
+        <button id="btn3" type="button" class="w-full sm:w-auto px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-1">Button 3</button>
       </div>
     </main>
+
+    <!-- Modal (hidden by default) -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-50 p-4">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 scale-95 opacity-0" id="modalContent">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Modal</h2>
+            <button id="closeModal" class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 text-2xl font-light transition-colors duration-200 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">&times;</button>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 mb-6 text-lg">This is a modal window!</p>
+          <div class="flex justify-end">
+            <button id="closeModalBtn" class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Script to wire up the 'Hello' popup on Button 1 -->
     <script>
       // Wait until the DOM is fully parsed and ready
       document.addEventListener('DOMContentLoaded', function () {
         // Get a reference to the first button by its id
-        var helloButton = document.getElementById('hello-btn');
+        var helloButton = document.getElementById('btn1');
         if (helloButton) {
           // When the button is clicked, show a simple alert
           helloButton.addEventListener('click', function () {
@@ -36,6 +61,7 @@
         }
       });
     </script>
+    <script src="script.js"></script>
   </body>
   </html>
 
