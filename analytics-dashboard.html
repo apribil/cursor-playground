@@ -114,7 +114,9 @@
               <button class="px-3 py-1 text-xs bg-slate-100 text-slate-600 rounded-full">90D</button>
             </div>
           </div>
-          <canvas id="engagementChart" width="400" height="200"></canvas>
+          <div class="relative" style="height: 300px;">
+            <canvas id="engagementChart"></canvas>
+          </div>
         </div>
 
         <!-- Conversion Funnel -->
@@ -123,7 +125,9 @@
             <h3 class="text-lg font-semibold text-slate-900">Conversion Funnel</h3>
             <div class="text-sm text-slate-500">Last 30 days</div>
           </div>
-          <canvas id="funnelChart" width="400" height="200"></canvas>
+          <div class="relative" style="height: 300px;">
+            <canvas id="funnelChart"></canvas>
+          </div>
         </div>
       </div>
 
@@ -185,12 +189,16 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-200/50">
           <h3 class="text-lg font-semibold text-slate-900 mb-6">Customer Segmentation</h3>
-          <canvas id="segmentationChart" width="400" height="300"></canvas>
+          <div class="relative" style="height: 350px;">
+            <canvas id="segmentationChart"></canvas>
+          </div>
         </div>
 
         <div class="bg-white rounded-2xl p-6 shadow-lg border border-slate-200/50">
           <h3 class="text-lg font-semibold text-slate-900 mb-6">Revenue by Channel</h3>
-          <canvas id="revenueChart" width="400" height="300"></canvas>
+          <div class="relative" style="height: 350px;">
+            <canvas id="revenueChart"></canvas>
+          </div>
         </div>
       </div>
     </main>

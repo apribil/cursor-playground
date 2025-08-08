@@ -46,6 +46,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 y: {
                     beginAtZero: true
                 }
+            },
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10
+                }
             }
         }
     });
@@ -75,6 +81,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 legend: {
                     position: 'bottom',
                 }
+            },
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10
+                }
             }
         }
     });
@@ -103,6 +115,12 @@ document.addEventListener('DOMContentLoaded', function() {
             plugins: {
                 legend: {
                     position: 'bottom',
+                }
+            },
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10
                 }
             }
         }
@@ -144,6 +162,12 @@ document.addEventListener('DOMContentLoaded', function() {
                             return '$' + value + 'K';
                         }
                     }
+                }
+            },
+            layout: {
+                padding: {
+                    top: 10,
+                    bottom: 10
                 }
             }
         }
