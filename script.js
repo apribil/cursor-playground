@@ -20,30 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Unified background management function
-    function setBackgroundColor(index, isDarkMode) {
-        const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
-        const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
-        
-        // Remove all background classes
-        const allColors = [...lightColors, ...darkColors];
-        allColors.forEach(color => {
-            if (document.body.classList.contains(color)) {
-                document.body.classList.remove(color);
-            }
-        });
-        
-        // Add the appropriate background class
-        const newColor = isDarkMode ? darkColors[index] : lightColors[index];
-        document.body.classList.add(newColor);
-        
-        // Save to localStorage
-        localStorage.setItem('backgroundIndex', index.toString());
-        
-        console.log('Background set to:', newColor, 'Index:', index, 'Dark mode:', isDarkMode);
-        return newColor;
-    }
-
+    // Simple dark mode toggle function
     function toggleDarkMode() {
         console.log('Dark mode toggle clicked!');
         
@@ -52,23 +29,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Save preference to localStorage
         localStorage.setItem('darkMode', isDarkMode);
         
-        // Update background color to match the new theme using unified function
-        const currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
-        setBackgroundColor(currentBgIndex, isDarkMode);
-        
-        console.log('Dark mode:', isDarkMode ? 'enabled' : 'disabled');
+        console.log('Dark mode:', isDarkMode ? 'enabled (night)' : 'disabled (day)');
     }
 
     // Initialize dark mode on page load
     initDarkMode();
 
-    // Initialize background color on page load
-    function initBackgroundColor() {
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        const currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
+    // Initialize dark mode on page load
+    function initDarkMode() {
+        // Check for saved dark mode preference or default to light mode
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
         
-        // Use unified function to set initial background
-        setBackgroundColor(currentBgIndex, isDarkMode);
+        // Apply dark mode if it was previously enabled
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+        }
     }
 
     // Debug function to update debug panel
@@ -80,22 +55,16 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (currentBg) {
             const isDarkMode = document.documentElement.classList.contains('dark');
-            const lightColors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
-            const darkColors = ['dark:bg-gray-900', 'dark:bg-blue-900', 'dark:bg-green-900', 'dark:bg-purple-900', 'dark:bg-yellow-900', 'dark:bg-pink-900', 'dark:bg-indigo-900', 'dark:bg-red-900'];
             
-            const currentBgClass = Array.from(document.body.classList).find(cls => 
-                lightColors.includes(cls) || darkColors.includes(cls)
-            );
-            
-            currentBg.textContent = currentBgClass || 'None';
-            darkModeStatus.textContent = isDarkMode ? 'Yes' : 'No';
-            bgIndex.textContent = localStorage.getItem('backgroundIndex') || '0';
+            currentBg.textContent = 'Default';
+            darkModeStatus.textContent = isDarkMode ? 'Night' : 'Day';
+            bgIndex.textContent = 'N/A';
             bodyClasses.textContent = document.body.className.substring(0, 50) + '...';
         }
     }
 
-    // Initialize background color
-    initBackgroundColor();
+    // Initialize dark mode
+    initDarkMode();
 
     // Update version time
     const updateTimeElement = document.getElementById('updateTime');
@@ -127,22 +96,186 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Button 1 was clicked! This is a logged message.');
     });
 
-    // Background Toggle: Change page background color
+    // Pac-Man Game Variables
+    let gameRunning = false;
+    let gameScore = 0;
+    let pacman = { x: 200, y: 150, size: 10, direction: 0, speed: 3 };
+    let dots = [];
+    let ghosts = [];
+    let gameLoop;
+
+    // Initialize Pac-Man Game
+    function initPacManGame() {
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Create dots
+        dots = [];
+        for (let i = 0; i < 20; i++) {
+            dots.push({
+                x: Math.random() * (canvas.width - 20) + 10,
+                y: Math.random() * (canvas.height - 20) + 10,
+                size: 3,
+                collected: false
+            });
+        }
+        
+        // Create ghosts
+        ghosts = [];
+        for (let i = 0; i < 3; i++) {
+            ghosts.push({
+                x: Math.random() * (canvas.width - 20) + 10,
+                y: Math.random() * (canvas.height - 20) + 10,
+                size: 8,
+                speed: 2,
+                direction: Math.random() * Math.PI * 2
+            });
+        }
+        
+        // Reset Pac-Man
+        pacman.x = 200;
+        pacman.y = 150;
+        pacman.direction = 0;
+        gameScore = 0;
+        document.getElementById('gameScore').textContent = gameScore;
+        
+        // Start game loop
+        gameRunning = true;
+        gameLoop = setInterval(updateGame, 50);
+    }
+
+    // Update game state
+    function updateGame() {
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Clear canvas
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw dots
+        ctx.fillStyle = '#FFFF00';
+        dots.forEach(dot => {
+            if (!dot.collected) {
+                ctx.beginPath();
+                ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        });
+        
+        // Draw Pac-Man
+        ctx.fillStyle = '#FFFF00';
+        ctx.beginPath();
+        ctx.arc(pacman.x, pacman.y, pacman.size, pacman.direction + 0.2, pacman.direction + Math.PI * 2 - 0.2);
+        ctx.lineTo(pacman.x, pacman.y);
+        ctx.fill();
+        
+        // Draw ghosts
+        ctx.fillStyle = '#FF0000';
+        ghosts.forEach(ghost => {
+            ctx.beginPath();
+            ctx.arc(ghost.x, ghost.y, ghost.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        
+        // Check dot collisions
+        dots.forEach(dot => {
+            if (!dot.collected) {
+                const distance = Math.sqrt((pacman.x - dot.x) ** 2 + (pacman.y - dot.y) ** 2);
+                if (distance < pacman.size + dot.size) {
+                    dot.collected = true;
+                    gameScore += 10;
+                    document.getElementById('gameScore').textContent = gameScore;
+                }
+            }
+        });
+        
+        // Check ghost collisions
+        ghosts.forEach(ghost => {
+            const distance = Math.sqrt((pacman.x - ghost.x) ** 2 + (pacman.y - ghost.y) ** 2);
+            if (distance < pacman.size + ghost.size) {
+                gameOver();
+            }
+        });
+        
+        // Move ghosts randomly
+        ghosts.forEach(ghost => {
+            ghost.x += Math.cos(ghost.direction) * ghost.speed;
+            ghost.y += Math.sin(ghost.direction) * ghost.speed;
+            
+            // Bounce off walls
+            if (ghost.x < ghost.size || ghost.x > canvas.width - ghost.size) {
+                ghost.direction = Math.PI - ghost.direction;
+            }
+            if (ghost.y < ghost.size || ghost.y > canvas.height - ghost.size) {
+                ghost.direction = -ghost.direction;
+            }
+            
+            // Random direction change
+            if (Math.random() < 0.02) {
+                ghost.direction = Math.random() * Math.PI * 2;
+            }
+        });
+        
+        // Check win condition
+        if (dots.every(dot => dot.collected)) {
+            alert('You win! Score: ' + gameScore);
+            gameOver();
+        }
+    }
+
+    // Game over function
+    function gameOver() {
+        gameRunning = false;
+        clearInterval(gameLoop);
+        alert('Game Over! Final Score: ' + gameScore);
+    }
+
+    // Handle keyboard input
+    document.addEventListener('keydown', function(e) {
+        if (!gameRunning) return;
+        
+        switch(e.key) {
+            case 'ArrowUp':
+                pacman.y -= pacman.speed;
+                pacman.direction = -Math.PI / 2;
+                break;
+            case 'ArrowDown':
+                pacman.y += pacman.speed;
+                pacman.direction = Math.PI / 2;
+                break;
+            case 'ArrowLeft':
+                pacman.x -= pacman.speed;
+                pacman.direction = Math.PI;
+                break;
+            case 'ArrowRight':
+                pacman.x += pacman.speed;
+                pacman.direction = 0;
+                break;
+        }
+        
+        // Keep Pac-Man in bounds
+        pacman.x = Math.max(pacman.size, Math.min(400 - pacman.size, pacman.x));
+        pacman.y = Math.max(pacman.size, Math.min(300 - pacman.size, pacman.y));
+    });
+
+    // Pac-Man Game Button
     btn2.addEventListener('click', function() {
-        console.log('Background Toggle clicked!');
-        
-        // Get current background index from localStorage
-        let currentBgIndex = parseInt(localStorage.getItem('backgroundIndex') || '0');
-        
-        // Increment index
-        currentBgIndex = (currentBgIndex + 1) % 8; // 8 colors total
-        
-        // Use unified function to set background
-        const isDarkMode = document.documentElement.classList.contains('dark');
-        setBackgroundColor(currentBgIndex, isDarkMode);
-        
-        // Update debug info
-        updateDebugInfo();
+        console.log('Pac-Man Game clicked!');
+        const gameContainer = document.getElementById('gameContainer');
+        gameContainer.classList.remove('hidden');
+        initPacManGame();
+    });
+
+    // Close game button
+    const closeGame = document.getElementById('closeGame');
+    closeGame.addEventListener('click', function() {
+        console.log('Close game clicked!');
+        const gameContainer = document.getElementById('gameContainer');
+        gameContainer.classList.add('hidden');
+        if (gameRunning) {
+            gameOver();
+        }
     });
 
     // Button 3: Toggle modal visibility
