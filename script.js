@@ -10,6 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeModal = document.getElementById('closeModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
 
+    // Debug: Check if buttons are found
+    console.log('Button references:', { btn1, btn2, btn3, modal, closeModal, closeModalBtn });
+    
+    if (!btn1) console.error('Button 1 not found!');
+    if (!btn2) console.error('Button 2 not found!');
+    if (!btn3) console.error('Button 3 not found!');
+    if (!modal) console.error('Modal not found!');
+
     // Debug function to update debug panel
     function updateDebugInfo() {
         const currentBg = document.getElementById('currentBg');
@@ -30,10 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(updateDebugInfo, 100);
 
     // Button 1: Show alert message
-    btn1.addEventListener('click', function() {
-        alert('Hello from Cursor!');
-        console.log('Button 1 was clicked! This is a logged message.');
-    });
+    if (btn1) {
+        btn1.addEventListener('click', function() {
+            alert('Hello from Cursor!');
+            console.log('Button 1 was clicked! This is a logged message.');
+        });
+    }
 
 
 
@@ -208,22 +218,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Pac-Man Game Button
-    btn2.addEventListener('click', function() {
-        console.log('Pac-Man Game clicked!');
-        const gameContainer = document.getElementById('gameContainer');
-        
-        if (gameContainer) {
-            console.log('Game container found, showing game...');
-            gameContainer.classList.remove('hidden');
-            initPacManGame();
+    if (btn2) {
+        btn2.addEventListener('click', function() {
+            console.log('Pac-Man Game clicked!');
+            const gameContainer = document.getElementById('gameContainer');
             
-            // Add keyboard listener for game
-            document.addEventListener('keydown', handleGameKeys);
-        } else {
-            console.error('Game container not found!');
-            alert('Game container not found. Please refresh the page.');
-        }
-    });
+            if (gameContainer) {
+                console.log('Game container found, showing game...');
+                gameContainer.classList.remove('hidden');
+                initPacManGame();
+                
+                // Add keyboard listener for game
+                document.addEventListener('keydown', handleGameKeys);
+            } else {
+                console.error('Game container not found!');
+                alert('Game container not found. Please refresh the page.');
+            }
+        });
+    }
 
     // Close game button
     const closeGame = document.getElementById('closeGame');
@@ -244,14 +256,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastFocusedElement = null;
 
     // Button 3: Toggle modal visibility with enhanced animations
-    btn3.addEventListener('click', function() {
-        if (modal.classList.contains('hidden')) {
-            openModal();
-        } else {
-            closeModal();
-        }
-        console.log('Modal visibility toggled');
-    });
+    if (btn3) {
+        btn3.addEventListener('click', function() {
+            if (modal && modal.classList.contains('hidden')) {
+                openModal();
+            } else if (modal) {
+                closeModal();
+            }
+            console.log('Modal visibility toggled');
+        });
+    }
 
     // Enhanced modal open function
     function openModal() {
@@ -367,20 +381,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Close modal when X button is clicked
-    closeModal.addEventListener('click', function() {
-        closeModal();
-    });
+    if (closeModal) {
+        closeModal.addEventListener('click', function() {
+            closeModal();
+        });
+    }
 
     // Close modal when Close button is clicked
-    closeModalBtn.addEventListener('click', function() {
-        closeModal();
-    });
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', function() {
+            closeModal();
+        });
+    }
 
     // Close modal when clicking outside the modal content
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
 });
   
