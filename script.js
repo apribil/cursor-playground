@@ -35,20 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listener for dark mode toggle
     darkModeToggle.addEventListener('click', toggleDarkMode);
 
-    // Button 1: Log a message to console
+    // Button 1: Show alert message
     btn1.addEventListener('click', function() {
+        alert('Hello from Cursor!');
         console.log('Button 1 was clicked! This is a logged message.');
     });
 
     // Button 2: Change page background color
     btn2.addEventListener('click', function() {
-        const colors = ['bg-blue-50', 'bg-green-50', 'bg-purple-50', 'bg-yellow-50', 'bg-pink-50'];
-        const currentBg = document.body.className.match(/bg-\w+-50/);
+        const colors = ['bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
         
-        // Remove current background color class
-        if (currentBg) {
-            document.body.classList.remove(currentBg[0]);
-        }
+        // Remove all existing background color classes
+        document.body.classList.remove('bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100');
         
         // Add a random background color
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
