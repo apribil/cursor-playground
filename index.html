@@ -47,9 +47,22 @@
         </div>
         <div class="text-center mb-4">
           <div class="text-sm text-gray-600 dark:text-gray-300 mb-2">Score: <span id="gameScore">0</span></div>
-          <div class="text-xs text-gray-500 dark:text-gray-400">Use arrow keys to move Pac-Man</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mb-2">🎮 Use arrow keys to move Pac-Man</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mb-2">🟡 Collect yellow dots for points</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 mb-2">👻 Avoid red ghosts!</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400">🏆 Collect all dots to win!</div>
         </div>
         <canvas id="gameCanvas" class="border-2 border-gray-300 dark:border-gray-600 rounded-lg mx-auto" width="400" height="300"></canvas>
+        <div id="gameInstructions" class="mt-4 p-3 bg-blue-50 dark:bg-blue-900 rounded-lg">
+          <div class="text-sm font-semibold text-blue-800 dark:text-blue-200 mb-2">🎯 Game Instructions:</div>
+          <div class="text-xs text-blue-700 dark:text-blue-300 space-y-1">
+            <div>• Move Pac-Man with arrow keys (↑↓←→)</div>
+            <div>• Collect all yellow dots to win</div>
+            <div>• Avoid the red ghosts - they'll end your game!</div>
+            <div>• Each dot gives you 10 points</div>
+            <div>• Click X to close the game</div>
+          </div>
+        </div>
       </div>
     </div>
 

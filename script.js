@@ -107,6 +107,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Pac-Man Game
     function initPacManGame() {
         const canvas = document.getElementById('gameCanvas');
+        
+        if (!canvas) {
+            console.error('Game canvas not found!');
+            alert('Game canvas not found. Please refresh the page.');
+            return;
+        }
+        
         const ctx = canvas.getContext('2d');
         
         // Create dots
@@ -231,8 +238,8 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Game Over! Final Score: ' + gameScore);
     }
 
-    // Handle keyboard input
-    document.addEventListener('keydown', function(e) {
+    // Handle keyboard input for Pac-Man game
+    function handleGameKeys(e) {
         if (!gameRunning) return;
         
         switch(e.key) {
@@ -257,14 +264,24 @@ document.addEventListener('DOMContentLoaded', function() {
         // Keep Pac-Man in bounds
         pacman.x = Math.max(pacman.size, Math.min(400 - pacman.size, pacman.x));
         pacman.y = Math.max(pacman.size, Math.min(300 - pacman.size, pacman.y));
-    });
+    }
 
     // Pac-Man Game Button
     btn2.addEventListener('click', function() {
         console.log('Pac-Man Game clicked!');
         const gameContainer = document.getElementById('gameContainer');
-        gameContainer.classList.remove('hidden');
-        initPacManGame();
+        
+        if (gameContainer) {
+            console.log('Game container found, showing game...');
+            gameContainer.classList.remove('hidden');
+            initPacManGame();
+            
+            // Add keyboard listener for game
+            document.addEventListener('keydown', handleGameKeys);
+        } else {
+            console.error('Game container not found!');
+            alert('Game container not found. Please refresh the page.');
+        }
     });
 
     // Close game button
@@ -276,6 +293,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (gameRunning) {
             gameOver();
         }
+        
+        // Remove keyboard listener for game
+        document.removeEventListener('keydown', handleGameKeys);
     });
 
     // Button 3: Toggle modal visibility
