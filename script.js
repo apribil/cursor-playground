@@ -41,18 +41,29 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Button 1 was clicked! This is a logged message.');
     });
 
-    // Button 2: Change page background color
+    // Background Toggle: Change page background color
     btn2.addEventListener('click', function() {
-        const colors = ['bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
+        const colors = ['bg-gray-100', 'bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100'];
         
-        // Remove all existing background color classes
-        document.body.classList.remove('bg-blue-100', 'bg-green-100', 'bg-purple-100', 'bg-yellow-100', 'bg-pink-100', 'bg-indigo-100', 'bg-red-100');
+        // Get current background class
+        const currentBg = Array.from(document.body.classList).find(cls => cls.startsWith('bg-') && cls.endsWith('-100'));
         
-        // Add a random background color
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        document.body.classList.add(randomColor);
+        // Find current color index
+        const currentIndex = colors.indexOf(currentBg);
         
-        console.log('Background color changed to:', randomColor);
+        // Get next color (cycle through)
+        const nextIndex = (currentIndex + 1) % colors.length;
+        const nextColor = colors[nextIndex];
+        
+        // Remove current background color class
+        if (currentBg) {
+            document.body.classList.remove(currentBg);
+        }
+        
+        // Add next background color
+        document.body.classList.add(nextColor);
+        
+        console.log('Background color changed from', currentBg || 'default', 'to:', nextColor);
     });
 
     // Button 3: Toggle modal visibility
