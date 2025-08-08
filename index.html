@@ -22,6 +22,24 @@
         opacity: 1;
         transform: translateY(0);
       }
+
+      /* Toast animations */
+      .toast {
+        transform: translateX(100%);
+        opacity: 0;
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        pointer-events: auto;
+      }
+      
+      .toast.show {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      
+      .toast.hide {
+        transform: translateX(100%);
+        opacity: 0;
+      }
     </style>
   </head>
   <body class="antialiased bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen relative">
@@ -71,7 +89,7 @@
             <div class="flex items-center space-x-4">
               <!-- Version Badge -->
               <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-sm">
-                v2.3.0
+                v2.4.0
               </div>
               
               <!-- Mobile menu button -->
@@ -295,6 +313,9 @@
       </div>
     </main>
 
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
     <script src="main.js"></script>
     <script>
       // Mobile menu toggle functionality
@@ -305,6 +326,15 @@
         mobileMenuButton.addEventListener('click', function() {
           mobileMenu.classList.toggle('hidden');
         });
+
+        // Test toast functionality
+        setTimeout(() => {
+          showToast('Welcome to the Product Management Showcase!', 'success');
+        }, 1000);
+        
+        setTimeout(() => {
+          showToast('Explore our interactive features and analytics.', 'info');
+        }, 3000);
       });
     </script>
   </body>

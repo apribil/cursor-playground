@@ -88,3 +88,107 @@ function initScrollReveal() {
 
     console.log(`Initialized scroll reveal for ${revealElements.length} elements`);
 }
+
+// Toast system functionality
+let toastCounter = 0;
+
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) {
+        console.error('Toast container not found');
+        return;
+    }
+
+    const toastId = `toast-${++toastCounter}`;
+    
+    // Define toast variants
+    const variants = {
+        success: {
+            bg: 'bg-green-500',
+            border: 'border-green-600',
+            icon: '✓',
+            iconBg: 'bg-green-600'
+        },
+        error: {
+            bg: 'bg-red-500',
+            border: 'border-red-600',
+            icon: '✕',
+            iconBg: 'bg-red-600'
+        },
+        info: {
+            bg: 'bg-blue-500',
+            border: 'border-blue-600',
+            icon: 'ℹ',
+            iconBg: 'bg-blue-600'
+        }
+    };
+
+    const variant = variants[type] || variants.info;
+
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.id = toastId;
+    toast.className = `toast ${variant.bg} ${variant.border} border-l-4 text-white p-4 rounded-lg shadow-lg max-w-sm backdrop-blur-sm`;
+    toast.innerHTML = `
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="${variant.iconBg} w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+                    ${variant.icon}
+                </div>
+                <p class="text-sm font-medium">${message}</p>
+            </div>
+            <button 
+                onclick="closeToast('${toastId}')" 
+                class="text-white/80 hover:text-white text-lg font-light transition-colors duration-200 ml-3"
+                aria-label="Close toast"
+            >
+                ×
+            </button>
+        </div>
+    `;
+
+    // Add to container
+    container.appendChild(toast);
+
+    // Trigger slide-in animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+
+    // Auto-dismiss after 3 seconds
+    const autoDismissTimer = setTimeout(() => {
+        closeToast(toastId);
+    }, 3000);
+
+    // Store timer reference for manual close
+    toast.dataset.dismissTimer = autoDismissTimer;
+
+    console.log(`Toast shown: ${type} - ${message}`);
+}
+
+function closeToast(toastId) {
+    const toast = document.getElementById(toastId);
+    if (!toast) return;
+
+    // Clear auto-dismiss timer
+    if (toast.dataset.dismissTimer) {
+        clearTimeout(parseInt(toast.dataset.dismissTimer));
+    }
+
+    // Trigger slide-out animation
+    toast.classList.remove('show');
+    toast.classList.add('hide');
+
+    // Remove from DOM after animation
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+        }
+    }, 300);
+
+    console.log(`Toast closed: ${toastId}`);
+}
+
+// Make functions globally available
+window.showToast = showToast;
+window.closeToast = closeToast;
